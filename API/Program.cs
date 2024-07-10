@@ -24,6 +24,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(opt => {
     opt.AllowAnyHeader()
         .AllowAnyMethod()
+        .AllowCredentials() // allow client to read cookies
         .WithOrigins("http://localhost:3000");
 
 });
