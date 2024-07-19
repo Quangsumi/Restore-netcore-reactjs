@@ -73,6 +73,9 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseDefaultFiles(); // use and serve index.html inside wwwroot folder
+app.UseStaticFiles(); // serve content inside wwwroot folder
+
 app.UseCors(opt => {
     opt.AllowAnyHeader()
         .AllowAnyMethod()
@@ -99,6 +102,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

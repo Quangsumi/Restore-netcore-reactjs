@@ -9,7 +9,7 @@ const sleep = () => new Promise(resolve => setTimeout(resolve, 500))
 // for reading cookies, combine with config Cors AllowCredential on server
 axios.defaults.withCredentials = true;
 
-axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.baseURL = 'http://localhost:5000/api/'; //import.meta.env.VITE_API_URL;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -20,7 +20,7 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response => {
-    await sleep();
+    if (import.meta.env.DEV) await sleep();
     const pagination = response.headers['pagination'];
     if (pagination) {
         response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
